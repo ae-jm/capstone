@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap&family=DM+Serif+Display:ital@1&family=IBM+Plex+Sans+KR:wght@200&family=Nanum+Myeongjo:wght@700&family=Playfair+Display:ital@1&display=swap');
+
+body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background: #fffef8;
+}
+
+div.col {
+    margin-bottom: 80px;
+}
+
+div.card-body {
+    display: flex;
+    background: #ebebeb;
+    margin-right: auto;
+    margin-left: auto;
+    width: 15rem;
+    height: 20rem;
+    margin-bottom: 50px;
+}
+
+div.card-body {
+    flex: 1;
+}
+
+img {
+    width: 100px;
+    margin-left: 20px;
+}
+
+ul li {
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+a.nav-link {
+    font-family: 'DM Serif Display', serif;
+    color: #1D0F5B;
+}
+
+a.nav-link:hover {
+    font-family: 'DM Serif Display', serif;
+    color: #545454;
+}

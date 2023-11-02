@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mudi</title>
+    <link rel="stylesheet" href="{% static 'diary/bootstrap/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'diary/css/home.css' %}" media="screen">
+</head>
+<body>
+<nav class="navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/post/">
+        <img src="{% static 'diary/images/nav_mu.png' %}" alt="mudi"/>
+    </a>
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="" class="nav-link">logout</a></li>
+        <li class="nav-item"><a href="/mypage" class="nav-link">mypage</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" id="main-area">
+        {% if post_list.exists %}
+        {% for p in post_list %}
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{{  p.get_absolute_url }}">{{ p.title }}</a>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ p.created_at }}</h6>
+                <p class="card-text">{{ p.content }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+    <h3>아직 게시물이 없습니다.</h3>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mudi</title>
+    <link rel="stylesheet" href="{% static 'pages/bootstrap/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'pages/css/index.css' %}" media="screen">
+</head>
+<body>
+<div class="container">
+    <img src="{% static 'pages/images/mu.png' %}" alt="mudi"/>
+    <p>음악으로 듣고, 보고, 느끼는 나의 감정</p>
+    <h5>로그인</h5>
+    <br/>
+    <h5>회원가입</h5>
+</div>
+</body>
+</html>
