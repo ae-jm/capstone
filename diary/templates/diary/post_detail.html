@@ -1,17 +1,29 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ post.title }} - 포스트</title>
-</head>
-<body>
-<nav>
-    <a href="/post/">mudi</a>
-</nav>
-<h1>{{ post.title }}</h1>
-<h4>{{ post.created_at }}</h4>
-<p>{{ post.content }}</p>
-<hr/>
-<button>리포트 보기</button>
-</body>
-</html>
+{% extends 'diary/base.html' %}
+{% load static %}
+
+{% block main_area %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{% static 'diary/bootstrap/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'diary/css/post_detail.css' %}" media="screen">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <h1 class="mt-4">{{ post.title }}</h1>
+                <p id="created">{{ post.created_at }}</p>
+                {% if user.is_authenticated and user == post.author %}
+                <a class="btn btn-info btn-sm float-right" href="/post/update_post/{{ post.pk }}/" role="button">
+                    <i class="fa-solid fa-pen"></i>  수정
+                </a>
+                {% endif %}
+                <hr/>
+                <p id="content">{{ post.content }}</p>
+                <hr/>
+            </div>
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary" type="button" href="#">리포트 보기</button>
+        </div>
+    </div>
+{% endblock %}

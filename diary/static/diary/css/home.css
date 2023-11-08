@@ -7,22 +7,71 @@ body {
     background: #fffef8;
 }
 
-div.col {
-    margin-bottom: 80px;
-}
-
-div.card-body {
-    display: flex;
-    background: #ebebeb;
-    margin-right: auto;
-    margin-left: auto;
-    width: 15rem;
-    height: 20rem;
+div.row {
+    margin-top: 50px;
     margin-bottom: 50px;
 }
 
-div.card-body {
-    flex: 1;
+div.col {
+    margin-left: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+a.btn.btn-info.btn-lg.float-left {
+    font-family: 'Gowun Dodum', sans-serif;
+    width: 200px;
+    height: 250px;
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+}
+
+a.btn.btn-info.btn-lg.float-left:hover {
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+}
+
+a.btn.btn-info.btn-lg.float-left:active {
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+}
+
+a.btn:link {
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+}
+
+a.btn:visited {
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+}
+
+i.fa-solid.fa-plus {
+    margin-left: auto;
+    margin-top: 70px;
+}
+
+a h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+a h5 {
+    line-height: 130px;
+    margin-top: 10px;
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+a p {
+    font-family: 'Nanum Myeongjo', serif;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
 }
 
 img {
@@ -43,4 +92,10 @@ a.nav-link {
 a.nav-link:hover {
     font-family: 'DM Serif Display', serif;
     color: #545454;
+}
+
+div.footer {
+    text-align: center;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 15px;
 }

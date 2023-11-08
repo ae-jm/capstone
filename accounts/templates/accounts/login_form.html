@@ -1,0 +1,25 @@
+{% extends 'diary/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block main_area %}
+    <link rel="stylesheet" href="{% static 'accounts/bootstrap/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'accounts/css/login_form.css' %}" media="screen">
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <h2>LOGIN</h2>
+            <hr/>
+            <div class="col-md-auto">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="d-grid gap-2 col-4 mx-auto">
+                        <button class="btn btn-primary" type="submit">로그인</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

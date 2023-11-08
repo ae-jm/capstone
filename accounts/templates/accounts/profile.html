@@ -1,0 +1,30 @@
+{% extends 'diary/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block main_area %}
+    <link rel="stylesheet" href="{% static 'accounts/bootstrap/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}" media="screen">
+
+    <div class="container text-center">
+        <h2>{{ user.username }}의 profile</h2>
+        <hr/>
+        <div class="row">
+            <div class="col-2">
+                <a class="btn btn-info btn-lg float-left" href="/post/" role="button">
+                    <h4>작성한 일기</h4>
+                    {% for p in post_list %}
+                    <p>{{ p.count }}개</p>
+                    {% endfor %}
+                </a>
+            </div>
+            <div class="col-2">
+                <a class="btn btn-info btn-lg float-left" href="#" role="button">
+                    <h4>음악 히스토리</h4>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

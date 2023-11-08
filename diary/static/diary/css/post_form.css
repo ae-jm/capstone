@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap&family=DM+Serif+Display:ital@1&family=IBM+Plex+Sans+KR:wght@200&family=Nanum+Myeongjo:wght@700&family=Playfair+Display:ital@1&display=swap');
+
+body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background: #fffef8;
+}
+
+div label {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 20px;
+    font-weight: bolder;
+    color: black;
+}
+
+form {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+button.btn-outline-secondary {
+    border-color: #5c636a;
+    background-color: #5c636a;
+    color: white;
+}
+
+button.btn-outline-secondary:hover {
+    border-color: #ebebeb;
+    background-color: #ebebeb;
+    color: #5c636a;
+}
+
+button.btn-outline-secondary:active {
+    border-color: #ebebeb;
+    background-color: #ebebeb;
+    color: #5c636a;
+}

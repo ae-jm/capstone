@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap&family=DM+Serif+Display:ital@1&family=IBM+Plex+Sans+KR:wght@200&family=Nanum+Myeongjo:wght@700&family=Playfair+Display:ital@1&display=swap');
 
 body {
     -webkit-background-size: cover;
@@ -34,3 +34,4 @@ div h5 {
     font-size: 25px;
     font-weight: bolder;
 }
+

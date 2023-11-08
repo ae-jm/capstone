@@ -1,46 +1,34 @@
-<!DOCTYPE html>
+{% extends 'diary/base.html' %}
 {% load static %}
-{% load django_bootstrap5 %}
-{% bootstrap_css %}
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mudi</title>
+
+{% block main_area %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{% static 'diary/bootstrap/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'diary/css/home.css' %}" media="screen">
-</head>
-<body>
-<nav class="navbar">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/post/">
-        <img src="{% static 'diary/images/nav_mu.png' %}" alt="mudi"/>
-    </a>
-    <ul class="nav nav-pills">
-        <li class="nav-item"><a href="" class="nav-link">logout</a></li>
-        <li class="nav-item"><a href="/mypage" class="nav-link">mypage</a></li>
-    </ul>
-  </div>
-</nav>
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col" id="main-area">
-        {% if post_list.exists %}
-        {% for p in post_list %}
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <a href="{{  p.get_absolute_url }}">{{ p.title }}</a>
-                </h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">{{ p.created_at }}</h6>
-                <p class="card-text">{{ p.content }}</p>
+    <div class="container">
+        <div class="row" id="main-area">
+            <div class="col-lg">
+                {% if post_list.exists %}
+                    {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <a class="btn btn-info btn-lg float-left" href="/post/create_new/" role="button">
+                                <i class="fa-solid fa-plus fa-4x"></i>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                    {% for p in post_list %}
+                        <a class="btn btn-info btn-lg float-left" href="{{ p.get_absolute_url }}" role="button">
+                            <h4>{{ p.title }}</h4>
+                            <h5>{{ p.content }}</h5>
+                            <p>{{ p.created_at }}</p>
+                        </a>
             </div>
         </div>
     </div>
-</div>
-{% endfor %}
-{% else %}
-    <h3>아직 게시물이 없습니다.</h3>
-{% endif %}
-</body>
-</html>
+                    {% endfor %}
+                {% else %}
+                    <h3>아직 게시물이 없습니다.</h3>
+                {% endif %}
+{% endblock %}
