@@ -95,6 +95,7 @@ a.nav-link:hover {
 }
 
 div.footer {
+    height: 50px;
     text-align: center;
     font-family: 'Gowun Dodum', sans-serif;
     font-size: 15px;

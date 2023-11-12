@@ -1,0 +1,20 @@
+{% extends 'diary/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block main_area %}
+    <link rel="stylesheet" href="{% static 'accounts/bootstrap/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'accounts/css/signup_form.css' %}" media="screen">
+    <div class="container">
+        <h2>profile update</h2>
+        <hr/>
+        <form action="{% url 'accounts:update' %}"  method="post">
+{#            enctype="multipart/form-data"#}
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="d-grid gap-2 col-4 mx-auto">
+                <button class="btn btn-primary" type="submit">수정</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

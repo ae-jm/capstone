@@ -3,6 +3,11 @@ from django.views.generic.edit import ModelFormMixin, ProcessFormView, BaseCreat
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.contrib.auth.views import *
 from accounts.models import User
+# from django.contrib.auth.forms import (
+#     UserCreationForm,
+#     PasswordChangeForm as AuthPasswordChangeForm
+# )
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 class UserForm(forms.ModelForm):
     error_messages = {
@@ -23,15 +28,8 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email',]
+        fields = ['email', 'first_name', 'last_name', 'username', ]
 
-    # gender = forms.CharField(
-    #     label=("남성(0) or 여성(1) 입력 바랍니다."),
-    # )
-    #
-    # age = forms.CharField(
-    #     label=("나이를 입력해 주세요"),
-    # )
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             if self._meta.model.USERNAME_FIELD in self.fields:
@@ -195,4 +193,132 @@ class CreateView(SingleObjectTemplateResponseMixin, BaseCreateView):
 
     template_name_suffix = "_form"
 
+# class UserChangeForm(forms.ModelForm):
+#     password = ReadOnlyPasswordHashField(
+#         label=("Password"),
+#         help_text=(
+#             'Raw passwords are not stored, so there is no way to see this '
+#             'user’s password, but you can change the password using '
+#             '<a href="{}">this form</a>.'
+#         ),
+#     )
+#
+#     class Meta:
+#         model = User
+#         fields = '__all__'
+#         field_classes = {'username': UsernameField}
+#
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         password = self.fields.get('password')
+#         if password:
+#             password.help_text = password.help_text.format('../password/')
+#         user_permissions = self.fields.get('user_permissions')
+#         if user_permissions:
+#             user_permissions.queryset = user_permissions.queryset.select_related('content_type')
 
+class UserChangeForm(forms.ModelForm):
+    password = ReadOnlyPasswordHashField(label=("Password"),
+        help_text=("Raw passwords are not stored, so there is no way to see "
+                    "this user's password, but you can change the password "
+                    "using <a href=\"password/\">this form</a>."))
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        f = self.fields.get('user_permissions', None)
+        if f is not None:
+            f.queryset = f.queryset.select_related('content_type')
+
+    # def clean_password(self):
+    #     # Regardless of what the user provides, return the initial value.
+    #     # This is done here, rather than on the field, because the
+    #     # field does not have access to the initial value
+    #     return self.initial["password"]
+
+
+class CustomUserChangeForm(UserChangeForm):
+
+    class Meta(UserChangeForm.Meta):
+        model = User
+        fields = ['username', 'first_name', 'last_name']
+
+
+# class PasswordChangeForm(AuthPasswordChangeForm):
+#     # clean_new_password2 재정의 시에는 super()함수 호출이 필요하다. (부모에 존재하는 유효성 검사이다.)
+#     def clean_new_password1(self):
+#         # new_password1에 대한 유효성 검사를 추가로 정의한다.
+#         old_password = self.cleaned_data.get('old_password')
+#         new_password1 = self.cleaned_data.get('new_password1')
+#
+#         if old_password and new_password1:
+#             if old_password == new_password1:  # 기존 암호와 같을 경우 폼 에러를 일으킨다.
+#                 raise forms.ValidationError('새로운 암호는 기존 암호와 다르게 입력해주세요')
+#         return new_password1
+
+# class SetPasswordForm(forms.Form):
+#     """
+#     A form that lets a user change set their password without entering the old
+#     password
+#     """
+#     error_messages = {
+#         'password_mismatch': ("The two password fields didn't match."),
+#     }
+#     new_password1 = forms.CharField(label=("New password"),
+#                                     widget=forms.PasswordInput)
+#     new_password2 = forms.CharField(label=("New password confirmation"),
+#                                     widget=forms.PasswordInput)
+#
+#     def __init__(self, user, *args, **kwargs):
+#         self.user = user
+#         super(SetPasswordForm, self).__init__(*args, **kwargs)
+#
+#     def clean_new_password2(self):
+#         password1 = self.cleaned_data.get('new_password1')
+#         password2 = self.cleaned_data.get('new_password2')
+#         if password1 and password2:
+#             if password1 != password2:
+#                 raise forms.ValidationError(
+#                     self.error_messages['password_mismatch'],
+#                     code='password_mismatch',
+#                 )
+#         return password2
+#
+#     def save(self, commit=True):
+#         self.user.set_password(self.cleaned_data['new_password1'])
+#         if commit:
+#             self.user.save()
+#         return self.user
+
+# class PasswordChangeForm(SetPasswordForm):
+#     """
+#     A form that lets a user change their password by entering their old
+#     password.
+#     """
+#     error_messages = dict(SetPasswordForm.error_messages, **{
+#         'password_incorrect': ("Your old password was entered incorrectly. "
+#                                 "Please enter it again."),
+#     })
+#     old_password = forms.CharField(label=("Old password"),
+#                                    widget=forms.PasswordInput)
+#
+#     def clean_old_password(self):
+#         """
+#         Validates that the old_password field is correct.
+#         """
+#         old_password = self.cleaned_data["old_password"]
+#         if not self.user.check_password(old_password):
+#             raise forms.ValidationError(
+#                 self.error_messages['password_incorrect'],
+#                 code='password_incorrect',
+#             )
+#         return old_password
+#
+#
+# PasswordChangeForm.base_fields = OrderedDict(
+#     (k, PasswordChangeForm.base_fields[k])
+#     for k in ['old_password', 'new_password1', 'new_password2']
+# )

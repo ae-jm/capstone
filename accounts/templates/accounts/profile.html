@@ -8,23 +8,30 @@
 
     <div class="container text-center">
         <h2>{{ user.username }}의 profile</h2>
-        <hr/>
-        <div class="row">
-            <div class="col-2">
-                <a class="btn btn-info btn-lg float-left" href="/post/" role="button">
+    <hr/>
+        <form action="{% url 'accounts:update' %}" method="post">
+            {% csrf_token %}
+            <div class="d-grid gap-2 col-8 mx-auto">
+                <button class="btn btn-primary" type="submit">프로필 수정</button>
+            </div>
+        </form>
+        <div class="group">
+            {% if post.exists %}
+                <a class="btn btn-info btn-lg float-right" href="/post/" role="button">
                     <h4>작성한 일기</h4>
-                    {% for p in post_list %}
-                    <p>{{ p.count }}개</p>
-                    {% endfor %}
+                    <p>{{ post_count }}</p>
                 </a>
-            </div>
-            <div class="col-2">
-                <a class="btn btn-info btn-lg float-left" href="#" role="button">
-                    <h4>음악 히스토리</h4>
-                </a>
-            </div>
+            {% endif %}
+            <a class="btn btn-info btn-lg float-left" href="#" role="button">
+                <h5>음악<br/>히스토리</h5>
+            </a>
         </div>
-
+        <form action="{% url 'accounts:delete' %}" method="post">
+            {% csrf_token %}
+            <div class="d-grid gap-2 col-8 mx-auto" id="quit">
+                <button class="btn btn-primary" type="submit">회원 탈퇴</button>
+            </div>
+        </form>
     </div>
 
 {% endblock %}

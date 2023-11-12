@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = '/post/'
 LOGOUT_REDIRECT_URL = '/'
+# CHANGE_PASSWORD_URL = 'accounts/password'
 
 # Application definition
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_extensions',
 
     'accounts',
     'pages',
