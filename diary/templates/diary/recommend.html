@@ -1,0 +1,21 @@
+{% extends 'diary/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block main_area %}
+    <link rel="stylesheet" href="{% static 'diary/bootstrap/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'diary/css/recommend.css' %}" media="screen">
+
+    <div class="container text-center">
+        <h2><{{ post.title }}>의 감정 report</h2>
+        <hr/>
+        <h5>오늘 나의 감정</h5>
+        <div>
+            {{ graph }}
+            <p>{{ score }}</p>
+        </div>
+        <div class="group">
+            {{ music_graph }}
+        </div>
+    </div>
+{% endblock %}

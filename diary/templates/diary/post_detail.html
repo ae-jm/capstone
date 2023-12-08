@@ -12,18 +12,20 @@
             <div class="col-lg">
                 <h1 class="mt-4">{{ post.title }}</h1>
                 <p id="created">{{ post.created_at }}</p>
+{#                {% if user.is_authenticated %}#}
                 {% if user.is_authenticated and user == post.author %}
-                <a class="btn btn-info btn-sm float-right" href="/post/update_post/{{ post.pk }}/" role="button">
-                    <i class="fa-solid fa-pen"></i>  수정
-                </a>
+                    <a class="btn btn-info btn-sm float-right" href="/post/update_post/{{ post.pk }}/" role="button">
+                        <i class="fa-solid fa-pen">  수정</i>
+                    </a>
                 {% endif %}
                 <hr/>
-                <p id="content">{{ post.content }}</p>
+                <a id="content">{{ post.content }}</a>
                 <hr/>
             </div>
         </div>
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-primary" type="button" href="#">리포트 보기</button>
-        </div>
+        <form method="post" enctype="multipart/form-data" class="d-grid gap-2 col-6 mx-auto">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" href="/post/report/">리포트 보기</button>
+        </form>
     </div>
 {% endblock %}

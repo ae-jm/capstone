@@ -2,12 +2,15 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from accounts.forms import UserForm, CustomUserChangeForm, LoginView, LogoutView, CreateView
 from django.contrib.auth.forms import PasswordChangeForm
+# from django.contrib.auth.views import LoginView
 from django.contrib.auth import update_session_auth_hash
-# from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.contrib.auth.views import PasswordChangeView as AuthPasswordChangeView
 from django.contrib import messages
-# from django.urls import reverse_lazy
 from diary.models import Post
+# from django.views.generic import CreateView
+from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect
+from accounts.forms import CustomUserCreationForm
 
 
 login = LoginView.as_view(
@@ -17,6 +20,19 @@ login = LoginView.as_view(
 logout = LogoutView.as_view(
     next_page='/'
 )
+
+# class UserRegistrationView(CreateView):
+#     model = get_user_model()
+#     form_class = UserRegistrationForm
+#     success_url = '/accounts/login/'
+
+# class UserLoginView(LoginView):
+#     template_name = "accounts/login_form.html"
+#
+#     def form_invalid(self, form):
+#         messages.error(sefl.request, '로그인에 실패하셨습니다.', extra_tags='danger')
+#         return super.form_invalid(form)
+
 
 @login_required  # 함수위에 씌워주면 로그인시에만 확인 가능
 def mypage(request):
@@ -37,10 +53,36 @@ signup = CreateView.as_view(
     template_name='accounts/signup_form.html',
 )
 
+def signup(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()  # form.save()를 통해 새로운 사용자가 생성되고 반환된다
+            # 아래의 줄을 추가하여 확인할 수 있다
+            print("회원가입 시 form.save() 호출됨")
+            return HttpResponseRedirect('/accounts/login/')  # 원하는 리다이렉션 URL로 변경
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'accounts/signup_form.html', {'form': form})
+
+# def signup(request):
+#     if request.method == "POST":
+#         form = UserForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             username=form.cleaned_data.get('username')
+#             raw_password = form.cleaned_data.get('password1')
+#             user = authenticate(username=username, password=raw_password)
+#             login(request, user)
+#             return redirect('index')
+#         else:
+#             form = UserForm()
+#         return render(request, 'accounts/signup_form.html', {'form': form})
+
 def delete(request):
     user = request.user
     user.delete()
-    return redirect('pages:index')
+    return redirect('pages/index.html')
 
 def update(request):
     if request.method == "POST":
@@ -76,3 +118,4 @@ def change_password(request):
 #         return super().form_valid(form)  # 폼 검사 결과를 리턴해야한다.
 #
 # change_password = PasswordChangeView.as_view()
+

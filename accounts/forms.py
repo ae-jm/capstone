@@ -11,7 +11,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 class UserForm(forms.ModelForm):
     error_messages = {
-        "password_mismatch": ("The two password fields didn’t match."),
+        "password_mismatch": ("비밀번호가 일치하지 않습니다."),
     }
     password1 = forms.CharField(
         label=("Password"),
@@ -66,6 +66,30 @@ class UserForm(forms.ModelForm):
                 user.save()
             return user
 
+
+class UserCreationForm(forms.ModelForm):
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation',widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name', 'username', ]
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
+
+    def save(self,commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
+
 class LoginView(RedirectURLMixin, FormView):
     """
     Display the login form and handle the login action.
@@ -73,6 +97,7 @@ class LoginView(RedirectURLMixin, FormView):
 
     form_class = AuthenticationForm
     authentication_form = None
+    redirect_field_name = REDIRECT_FIELD_NAME
     template_name = "registration/login.html"
     redirect_authenticated_user = False
     extra_context = None
@@ -233,11 +258,11 @@ class UserChangeForm(forms.ModelForm):
         if f is not None:
             f.queryset = f.queryset.select_related('content_type')
 
-    # def clean_password(self):
-    #     # Regardless of what the user provides, return the initial value.
-    #     # This is done here, rather than on the field, because the
-    #     # field does not have access to the initial value
-    #     return self.initial["password"]
+    def clean_password(self):
+        # Regardless of what the user provides, return the initial value.
+        # This is done here, rather than on the field, because the
+        # field does not have access to the initial value
+        return self.initial["password"]
 
 
 class CustomUserChangeForm(UserChangeForm):
@@ -245,6 +270,34 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
         fields = ['username', 'first_name', 'last_name']
+
+from django import forms
+from .models import User
+
+class CustomUserCreationForm(forms.ModelForm):
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name', 'username']
+
+    def clean_password2(self):
+        # 비밀번호 일치 확인
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        # 비밀번호 저장
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
 
 
 # class PasswordChangeForm(AuthPasswordChangeForm):

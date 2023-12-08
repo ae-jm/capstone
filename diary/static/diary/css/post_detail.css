@@ -1,15 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap&family=DM+Serif+Display:ital@1&family=IBM+Plex+Sans+KR:wght@200&family=Nanum+Myeongjo:wght@700&family=Playfair+Display:ital@1&display=swap');
 
 body {
+    height: 100%;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background: #fffef8;
 }
 
+div.container {
+    height: 570px;
+    width: 900px;
+}
+
 div.row {
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 div.col-lg {
@@ -29,15 +34,21 @@ p#created{
     font-size: 16px;
 }
 
-p#content {
-    line-height: 300px;
+a#content {
+    width: 500px;
+    line-height: 30px;
+    font-size: 18px;
+}
+
+form {
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 24px;
 }
 
 button.btn.btn-primary {
-    margin-top: 10px;
+    margin-bottom: 10px;
     border-color: #5c636a;
     background-color: #5c636a;
     font-family: 'Gowun Dodum', sans-serif;
@@ -54,4 +65,15 @@ button.btn.btn-primary:active {
     border-color: #ebebeb;
     background-color: #ebebeb;
     color: #5c636a;
+}
+
+div#wrap{
+    height: 50px;
+	/*min-height: calc(100vh - 10rem);*/
+	position: relative;
+}
+footer{
+    text-align: center;
+	bottom: 0;
+	position: relative;
 }

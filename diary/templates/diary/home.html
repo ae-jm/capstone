@@ -8,27 +8,32 @@
     <link rel="stylesheet" href="{% static 'diary/bootstrap/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'diary/css/home.css' %}" media="screen">
     <div class="container">
-        <div class="row" id="main-area">
-            <div class="col-lg">
-                {% if post_list.exists %}
-                    {% if user.is_authenticated %}
-                        {% if user.is_superuser %}
-                            <a class="btn btn-info btn-lg float-left" href="/post/create_new/" role="button">
-                                <i class="fa-solid fa-plus fa-4x"></i>
-                            </a>
-                        {% endif %}
-                    {% endif %}
-                    {% for p in post_list %}
-                        <a class="btn btn-info btn-lg float-left" href="{{ p.get_absolute_url }}" role="button">
-                            <h4>{{ p.title }}</h4>
-                            <h5>{{ p.content }}</h5>
-                            <p>{{ p.created_at }}</p>
-                        </a>
+        {% if post_list.exists %}
+            <div class="group">
+            {% if user.is_authenticated %}
+                {% if user.is_active %}
+                    <a class="btn btn-info btn-lg float-left" href="/post/create_new/" role="button">
+                        <i class="fa-solid fa-plus fa-4x"></i>
+                    </a>
+                {% endif %}
+            {% endif %}
+            {% for p in post_list %}
+                <a class="btn btn-info btn-lg float-left" href="{{ p.get_absolute_url }}" role="button">
+                    <h4>{{ p.title }}</h4>
+                    <h5>{{ p.content }}</h5>
+                    <p>{{ p.created_at }}</p>
+                </a>
+            {% endfor %}
             </div>
-        </div>
-    </div>
-                    {% endfor %}
                 {% else %}
+                    {% if user.is_authenticated %}
+                    {% if user.is_active %}
+                        <a class="btn btn-info btn-lg float-left" href="/post/create_new/" role="button">
+                            <i class="fa-solid fa-plus fa-4x"></i>
+                        </a>
+                    {% endif %}
+                    {% endif %}
                     <h3>아직 게시물이 없습니다.</h3>
                 {% endif %}
+    </div>
 {% endblock %}

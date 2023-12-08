@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Gowun+Dodum&family=IBM+Plex+Sans&family=Nanum+Myeongjo&display=swap');
+
+body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background: #fffef8;
+}
+
+div.container.text-center {
+    width: 640px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    box-sizing: border-box;
+    border: 1px solid #5c636a;
+    border-radius: 6px;
+    background-color: white;
+}
+
+div h2 {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 30px;
+    font-weight: bolder;
+    color: #1D0F5B;
+}
+
+button.btn.btn-primary {
+    font-family: 'Gowun Dodum', sans-serif;
+    margin-top: 30px;
+    border-color: #5c636a;
+    background-color: white;
+    color: #5c636a;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+button.btn.btn-primary:hover {
+    border-color: #5c636a;
+    background-color: #5c636a;
+    color: white;
+}
+
+button.btn.btn-primary:active {
+    border-color: #5c636a;
+    background-color: #5c636a;
+    color: white;
+}
+
+div.group {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+a.btn.btn-info.btn-lg.float-right {
+    font-family: 'Gowun Dodum', sans-serif;
+    width: 250px;
+    height: 200px;
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+    /*margin-left: 200px;*/
+    margin-right: 20px;
+}
+
+a.btn.btn-info.btn-lg.float-left {
+    font-family: 'Gowun Dodum', sans-serif;
+    width: 250px;
+    height: 200px;
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+    margin-left: 20px;
+    /*margin-right: 200px;*/
+}
+
+a.btn.btn-info.btn-lg:hover {
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+}
+
+a.btn.btn-info.btn-lg:active {
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+}
+
+a h4 {
+    margin-top: 50px;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+a p {
+    margin-top: 10px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+a h5 {
+    margin-top: 55px;
+    line-height: 35px;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+div#quit button {
+    font-family: 'Gowun Dodum', sans-serif;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    border-color: #5c636a;
+    background-color: white;
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+div#quit button:hover {
+    border-color: red;
+    background-color: red;
+    color: white;
+}
+
+div#quit button:active {
+    border-color: red;
+    background-color: red;
+    color: white;
+}

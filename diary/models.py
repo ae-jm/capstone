@@ -1,12 +1,18 @@
 from django.db import models
+# from django.contrib.auth.models import User
+from django.conf import settings
+import os
 
+User = settings.AUTH_USER_MODEL
 class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
-        return f'[{self.pk}]{self.title}'
+        return f'[{self.pk}]{self.title} :: {self.author}'
 
     def get_absolute_url(self):
         return f'/post/{self.pk}/'
@@ -130,20 +136,18 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-# class Musicdata(models.Model):
-#     id = models.IntegerField(blank=True, null=True)
-#     artist = models.TextField(blank=True, null=True)
-#     title = models.TextField(blank=True, null=True)
-#     불안 = models.FloatField(blank=True, null=True)
-#     분노 = models.FloatField(blank=True, null=True)
-#     상처 = models.FloatField(blank=True, null=True)
-#     슬픔 = models.FloatField(blank=True, null=True)
-#     당황 = models.FloatField(blank=True, null=True)
-#     기쁨 = models.FloatField(blank=True, null=True)
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'musicdata'
+class Musicdata(models.Model):
+    id = models.IntegerField(primary_key=True)
+    artist = models.TextField(blank=True, null=True)
+    title = models.TextField(blank=True, null=True)
+    unrest = models.FloatField(blank=True, null=True, verbose_name="불안")
+    anger = models.FloatField(blank=True, null=True, verbose_name="분노")
+    hurt = models.FloatField(blank=True, null=True, verbose_name="상처")
+    sadness = models.FloatField(blank=True, null=True, verbose_name="슬픔")
+    embarrassment = models.FloatField(blank=True, null=True, verbose_name="당황")
+    joy = models.FloatField(blank=True, null=True, verbose_name="기쁨")
 
-
+    class Meta:
+        managed = False
+        db_table = 'musicdata'
 
