@@ -8,7 +8,8 @@ body {
 }
 
 div.container.text-center {
-    width: 640px;
+    width: 900px;
+    height: auto;
     margin-top: 50px;
     margin-bottom: 50px;
     box-sizing: border-box;
@@ -17,8 +18,13 @@ div.container.text-center {
     background-color: white;
 }
 
+div.user-select-none.svg-container {
+    text-align: center;
+    margin: auto;
+}
+
 div h2 {
-    text-align: left;
+    text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 10px;
@@ -26,6 +32,27 @@ div h2 {
     font-size: 30px;
     font-weight: bolder;
     color: #1D0F5B;
+}
+
+div h3 {
+    text-align: center;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 30px;
+    font-weight: bolder;
+    color: #1D0F5B;
+}
+
+div h5 {
+    font-family: 'Gowun Dodum', sans-serif;
+    font-weight: bold;
+    color: #5c636a;
+}
+
+h5#emotion {
+    font-family: 'Gowun Dodum', sans-serif;
+    font-weight: bold;
+    font-size: 26px;
+    color: #5c636a;
 }
 
 button.btn.btn-primary {
@@ -128,4 +155,19 @@ div#quit button:active {
     border-color: red;
     background-color: red;
     color: white;
+}
+
+div.music-graphs {
+    margin-bottom: 20px;
+}
+
+div#wrap{
+    height: 50px;
+	/*min-height: calc(100vh - 10rem);*/
+	position: relative;
+}
+footer{
+    text-align: center;
+	bottom: 0;
+	position: relative;
 }

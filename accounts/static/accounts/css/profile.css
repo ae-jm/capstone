@@ -7,6 +7,12 @@ body {
     background: #fffef8;
 }
 
+a.nav-link {
+    font-family: 'DM Serif Display', serif;
+    font-style: oblique;
+    color: #1D0F5B;
+}
+
 div.container.text-center {
     width: 640px;
     margin-top: 30px;

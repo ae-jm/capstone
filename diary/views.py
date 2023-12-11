@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Post
+from .models import Post, RecommendedMusic
 from django.core.exceptions import PermissionDenied
 from recommend import *
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 ##@login_required
 @method_decorator(login_required, name='dispatch')
@@ -39,8 +41,6 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
         else:
             raise PermissionDenied
 
-
-
 @login_required
 def create_post(request):
     if request.method == 'POST':
@@ -62,23 +62,83 @@ def create_post(request):
     # GET 요청 시 필요한 작업 처리 (예: 게시글 작성 폼 표시)
     return render(request, 'diary/home.html')
 
+import json
 
-def report(request):
-    posts = Post.objects.only('content')
-    content = posts.filter(pk=id)
-    score = max_score_show(content)
+def report(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    content = post.content
+    title = post.title
+    emotion = max_score_show(content)
+
+    # 추천 함수 호출 및 음악 추천 데이터 받아오기
     re_sys = recommend(content)
-    graph = show_mygraph(content)
-    music_graph = show_music_graph(content)
+    first_music = re_sys[0][1]+'-'+re_sys[0][2]
+    second_music = re_sys[1][1]+'-'+re_sys[1][2]
+    third_music = re_sys[2][1]+'-'+re_sys[2][2]
+    fourth_music = re_sys[3][1]+'-'+re_sys[3][2]
+
+    # 음악 추천 데이터 저장
+    save_recommended_music(re_sys)
+
+    # get_recommended_music_list 뷰 호출하여 추천 음악 리스트 가져오기
+    recommended_music = get_recommended_music_list(request)
+
+    # 그래프 데이터 생성
+    score = senti_score(content)
+    score_json = json.dumps(score)  # JSON 형식으로 변환
+
+    # 음악 추천에 따른 그래프 생성
+    first_graph = first_music_graph(content)
+    second_graph = second_music_graph(content)
+    third_graph = third_music_graph(content)
+    fourth_graph = fourth_music_graph(content)
+
     return render(
         request,
         'diary/recommend.html',
         {
-            'posts': posts,
+            'posts': post,
             'content': content,
-            'score': score,
-            're_sys': re_sys,
-            'graph': graph,
-            'music_graph': music_graph,
+            'title': title,
+            'emotion': emotion,
+            're_sys': re_sys,   # 음악 추천 데이터 전달
+            'first_music': first_music,
+            'second_music': second_music,
+            'third_music': third_music,
+            'fourth_music': fourth_music,
+            'recommended_music': recommended_music,
+            'score_json': score_json,  # JSON 형식의 그래프 데이터 전달
+            'first_graph': first_graph.to_json(),
+            'second_graph': second_graph.to_json(),
+            'third_graph': third_graph.to_json(),
+            'fourth_graph': fourth_graph.to_json(),
         }
     )
+
+def save_recommended_music(data_list):
+    for music_data in data_list:
+        # 이미 저장된 음악인지 확인
+        existing_music = RecommendedMusic.objects.filter(artist=music_data['artist'], title=music_data['title']).exists()
+        if not existing_music:
+            music = RecommendedMusic.objects.create(
+                title=music_data['title'],
+                artist=music_data['artist'],
+            )
+            music.save()
+
+
+def get_recommended_music_list(request):
+    recommended_music_list = []
+
+    # 중복 제거를 위해 set을 사용하여 고유한 값만 필터링
+    recommended_music = set(RecommendedMusic.objects.all().values_list('artist', 'title'))
+
+    for music in recommended_music:
+        recommended_music_list.append(f"{music[0]} - {music[1]}")
+
+    return render(
+        request,
+        'diary/playlist.html',
+        {'recommended_music': recommended_music_list}
+    )
+

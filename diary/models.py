@@ -2,6 +2,7 @@ from django.db import models
 # from django.contrib.auth.models import User
 from django.conf import settings
 import os
+from recommend import *
 
 User = settings.AUTH_USER_MODEL
 class Post(models.Model):
@@ -151,3 +152,9 @@ class Musicdata(models.Model):
         managed = False
         db_table = 'musicdata'
 
+class RecommendedMusic(models.Model):
+    title = models.CharField(max_length=100)
+    artist = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.artist} - {self.title}'

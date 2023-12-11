@@ -7,15 +7,60 @@
     <link rel="stylesheet" href="{% static 'diary/css/recommend.css' %}" media="screen">
 
     <div class="container text-center">
-        <h2><{{ post.title }}>의 감정 report</h2>
+        <h2><{{ title }}> report</h2>
         <hr/>
-        <h5>오늘 나의 감정</h5>
+        <h3>오늘 나의 감정</h3>
         <div>
-            {{ graph }}
-            <p>{{ score }}</p>
+            <div id="graph"></div>
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+                function updateGraph() {
+                    var scoreData = {{ score_json|safe }};  // JSON 데이터 가져오기
+                    var maxScore = Math.max(...scoreData);
+                    var layout = {
+                        polar: {
+                            radialaxis: {
+                                visible: true,
+                                range: [0, maxScore] // y 축 범위 설정 (원하는 범위로 변경 가능)
+                            }
+                        },
+                        // 그래프 크기 조정
+                        height: 400, // 원하는 높이 값으로 변경
+                        width: 400   // 원하는 너비 값으로 변경
+                    };
+                    var trace = {
+                        type: 'scatterpolar',
+                        r: scoreData, // radar chart에 표시할 데이터 배열
+                        theta: ['불안', '분노', '상처', '슬픔', '당황', '기쁨'], // 각 항목 이름
+                        fill: 'toself'
+                    };
+                    var plotData = [trace];
+                    Plotly.newPlot('graph', plotData, layout);
+                }
+                updateGraph(); // 페이지 로드 후 그래프 업데이트
+                setInterval(updateGraph, 5000); // 5초마다 그래프 업데이트
+            </script>
+            <h5 id="emotion">"{{ emotion }}"</h5>
         </div>
-        <div class="group">
-            {{ music_graph }}
+        <div class="music-graphs">
+            <div id="first_graph" style="display:inline-block;"><h5>{{ first_music }}</h5></div>
+            <div id="second_graph" style="display:inline-block;"><h5>{{ second_music }}</h5></div>
+            <div id="third_graph" style="display:inline-block;"><h5>{{ third_music }}</h5></div>
+            <div id="fourth_graph" style="display:inline-block;"><h5>{{ fourth_music }}</h5></div>
         </div>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            var firstGraphData = {{ first_graph|safe }};
+            var secondGraphData = {{ second_graph|safe }};
+            var thirdGraphData = {{ third_graph|safe }};
+            var fourthGraphData = {{ fourth_graph|safe }};
+
+            Plotly.newPlot('first_graph', firstGraphData);
+            Plotly.newPlot('second_graph', secondGraphData);
+            Plotly.newPlot('third_graph', thirdGraphData);
+            Plotly.newPlot('fourth_graph', fourthGraphData);
+        </script>
     </div>
 {% endblock %}

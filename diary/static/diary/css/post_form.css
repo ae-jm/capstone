@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap&family=DM+Serif+Display:ital@1&family=IBM+Plex+Sans+KR:wght@200&family=Nanum+Myeongjo:wght@700&family=Playfair+Display:ital@1&display=swap');
 
 body {
+    height: 100%;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background: #fffef8;
+}
+
+div.container {
+    width: 1000px;
 }
 
 div label {
@@ -17,7 +22,23 @@ div label {
 form {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 50px;
+    margin-top: 55px;
+}
+
+button.btn.btn-primary{
+    float: right;
+    margin-bottom: 5px;
+    border-color: grey;
+    background-color: #fffef8;
+}
+
+button.btn.btn-primary i {
+    color: #1D0F5B;
+}
+
+button.btn.btn-primary:active {
+    border-color: grey;
+    background-color: #fffef8;
 }
 
 button.btn-outline-secondary {

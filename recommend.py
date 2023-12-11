@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import re
+import json
 
 from konlpy.tag import Okt
 from tensorflow.keras.preprocessing.text import Tokenizer
@@ -39,20 +40,23 @@ def senti_score(post):
 def max_score_show(post):
   score = senti_score(post)
   # 예측 감성 출력
-  if (score.index(max(score)) == 0):
-    return print("작성하신 일기는 불안 감정이 가장 높습니다.", round(max(score), 2))
-  elif (score.index(max(score)) == 1):
-    return print("작성하신 일기는 분노 감정이 가장 높습니다.", round(max(score), 2))
-  elif (score.index(max(score)) == 2):
-    return print("작성하신 일기는 상처 감정이 가장 높습니다.", round(max(score), 2))
-  elif (score.index(max(score)) == 3):
-    return print("작성하신 일기는 슬픔 감정이 가장 높습니다.", round(max(score), 2))
-  elif (score.index(max(score)) == 4):
-    return print("작성하신 일기는 당황 감정이 가장 높습니다.", round(max(score), 2))
-  elif (score.index(max(score)) == 5):
-    return print("작성하신 일기는 기쁨 감정이 가장 높습니다.", round(max(score), 2))
+  emotext = ""
+  if score.index(max(score)) == 0:
+    emotext = "작성하신 일기는 불안 감정이 가장 높습니다."
+  elif score.index(max(score)) == 1:
+    emotext = "작성하신 일기는 분노 감정이 가장 높습니다."
+  elif score.index(max(score)) == 2:
+    emotext = "작성하신 일기는 상처 감정이 가장 높습니다."
+  elif score.index(max(score)) == 3:
+    emotext = "작성하신 일기는 슬픔 감정이 가장 높습니다."
+  elif score.index(max(score)) == 4:
+    emotext = "작성하신 일기는 당황 감정이 가장 높습니다."
+  elif score.index(max(score)) == 5:
+    emotext = "작성하신 일기는 기쁨 감정이 가장 높습니다."
   else:
-    return print("오류!!!!!")
+    emotext = "오류!!!!!"
+
+  return emotext
 
 
 def recommend(post):
@@ -85,44 +89,59 @@ def recommend(post):
 
   return [close1, close2, close3, close4]
 
-# fig = go.Figure(data=go.Scatterpolar(
-#   r=[1, 5, 2, 2, 3],
-#   theta=['processing cost','mechanical properties','chemical stability', 'thermal stability',
-#            'device integration'],
-#   fill='toself'
-# ))
-#
-# fig.update_layout(
-#   polar=dict(
-#     radialaxis=dict(
-#       visible=True
-#     ),
-#   ),
-#   showlegend=False
-# )
 
-def show_mygraph(post):
-  score_li = senti_score(post)
-  categories = ['불안', '분노', '상처', '슬픔', '당황', '기쁨']
-  fig = go.Figure()
-  fig.add_trace(go.Scatterpolar(
-    r=score_li,
-    theta=categories,
-    fill="toself",
-    name="내 감정"
-  ))
-
-def show_music_graph(post):
+def first_music_graph(post):
   id = recommend(post)
   categories = ['불안', '분노', '상처', '슬픔', '당황', '기쁨']
   fig = go.Figure()
-  for i in range(len(id)):
-    re_mu = id[i]
-    fig.add_trace(go.Scatterpolar(
-      r=id[i][3:9],
-      theta=categories,
-      fill='toself',
-      name=re_mu[1] + '-' + re_mu[2]
+  re_mu = id[0]
+  fig.add_trace(go.Scatterpolar(
+    r=id[0][3:9],
+    theta=categories,
+    fill='toself',
+    # name=re_mu[1] + '-' + re_mu[2]
     ))
-  fig.update_layout(height=300, width=500, title_text="나의 감정과 추천 음악 비교")
-  return fig.show()
+  fig.update_layout(height=300, width=300)
+  return fig
+
+def second_music_graph(post):
+  id = recommend(post)
+  categories = ['불안', '분노', '상처', '슬픔', '당황', '기쁨']
+  fig = go.Figure()
+  re_mu = id[1]
+  fig.add_trace(go.Scatterpolar(
+    r=id[1][3:9],
+    theta=categories,
+    fill='toself',
+    # name=re_mu[1] + '-' + re_mu[2]
+    ))
+  fig.update_layout(height=300, width=300)
+  return fig
+
+def third_music_graph(post):
+  id = recommend(post)
+  categories = ['불안', '분노', '상처', '슬픔', '당황', '기쁨']
+  fig = go.Figure()
+  re_mu = id[2]
+  fig.add_trace(go.Scatterpolar(
+    r=id[2][3:9],
+    theta=categories,
+    fill='toself',
+    # name=re_mu[1] + '-' + re_mu[2]
+    ))
+  fig.update_layout(height=300, width=300)
+  return fig
+
+def fourth_music_graph(post):
+  id = recommend(post)
+  categories = ['불안', '분노', '상처', '슬픔', '당황', '기쁨']
+  fig = go.Figure()
+  re_mu = id[3]
+  fig.add_trace(go.Scatterpolar(
+    r=id[3][3:9],
+    theta=categories,
+    fill='toself',
+    # name=re_mu[1] + '-' + re_mu[2]
+    ))
+  fig.update_layout(height=300, width=300)
+  return fig

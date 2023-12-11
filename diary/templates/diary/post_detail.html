@@ -12,7 +12,6 @@
             <div class="col-lg">
                 <h1 class="mt-4">{{ post.title }}</h1>
                 <p id="created">{{ post.created_at }}</p>
-{#                {% if user.is_authenticated %}#}
                 {% if user.is_authenticated and user == post.author %}
                     <a class="btn btn-info btn-sm float-right" href="/post/update_post/{{ post.pk }}/" role="button">
                         <i class="fa-solid fa-pen">  수정</i>
@@ -23,9 +22,33 @@
                 <hr/>
             </div>
         </div>
-        <form method="post" enctype="multipart/form-data" class="d-grid gap-2 col-6 mx-auto">
+        <form action="{% url 'diary:report' pk=post.pk %}" method="post" class="d-grid gap-2 col-6 mx-auto" id="reportForm">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary" href="/post/report/">리포트 보기</button>
+            <button type="submit" class="btn btn-primary" id="reportButton">리포트 보기</button>
         </form>
+        <div class="spinner-overlay" id="overlay"></div>
+        <div class="spinner-container" id="spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
     </div>
+
+    <script>
+        document.getElementById('reportForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 기본 폼 제출 동작 중지
+            document.getElementById('spinner').classList.add('active'); // 스피너 활성화
+            document.getElementById('overlay').classList.add('active'); // 페이지 다른 액션 비활성화
+            document.body.style.overflow = 'hidden'; // 스크롤 비활성화
+            setTimeout(function() {
+                document.getElementById('reportForm').submit(); // 폼 제출
+            }, 1000); // 원하는 시간(ms)만큼 스피너 활성화
+        });
+
+        window.addEventListener('load', function() {
+            document.getElementById('spinner').classList.remove('active'); // 로딩 완료 시 스피너 비활성화
+            document.getElementById('overlay').classList.remove('active'); // 페이지 다른 액션 활성화
+            document.body.style.overflow = 'auto'; // 스크롤 활성화
+        });
+    </script>
 {% endblock %}

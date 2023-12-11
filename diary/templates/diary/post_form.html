@@ -1,14 +1,60 @@
 {% extends 'diary/base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 {% block main_area %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{% static 'diary/bootstrap/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'diary/css/post_form.css' %}" media="screen">
     <div class="container">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" id="diaryForm" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form | crispy }}
-            <button type="submit" class="btn btn-outline-secondary">upload!</button>
+            <div class="form-group">
+                <label for="id_title">Title*</label>
+                <button onclick="startTitleRecognition()" class="btn btn-primary">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+                <input type="text" class="form-control" id="id_title" name="title">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="id_content">Content*</label>
+                <button onclick="startContentRecognition()" class="btn btn-primary">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+                <textarea class="form-control" id="id_content" name="content" rows="10"></textarea>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-outline-secondary">Upload!</button>
         </form>
     </div>
+    <script>
+        function startTitleRecognition() {
+            const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+            recognition.lang = 'ko-KR'; // 원하는 언어로 설정 (예: 한국어)
+
+            recognition.onresult = function (event) {
+                const speechToText = event.results[0][0].transcript;
+                const titleField = document.getElementById("id_title");
+                titleField.value = speechToText; // 제목 필드에 음성을 입력한 텍스트 삽입
+                console.log('음성을 텍스트로 변환:', speechToText);
+            }
+
+            recognition.start();
+        }
+
+        function startContentRecognition() {
+            const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+            recognition.lang = 'ko-KR'; // 원하는 언어로 설정 (예: 한국어)
+
+            recognition.onresult = function (event) {
+                const speechToText = event.results[0][0].transcript;
+                const contentField = document.getElementById("id_content");
+                contentField.value = speechToText; // 내용 필드에 음성을 입력한 텍스트 삽입
+                console.log('음성을 텍스트로 변환:', speechToText);
+            }
+
+            recognition.start();
+        }
+    </script>
 {% endblock %}
