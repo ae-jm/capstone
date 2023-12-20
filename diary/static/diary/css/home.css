@@ -8,10 +8,6 @@ body {
     background: #fffef8;
 }
 
-div.container {
-    height: 530px;
-}
-
 div.group {
     margin-left: auto;
     margin-top: 50px;
@@ -114,13 +110,6 @@ a.nav-link:hover {
     color: #545454;
 }
 
-div.footer {
-    height: 50px;
-    text-align: center;
-    font-family: 'Gowun Dodum', sans-serif;
-    font-size: 15px;
-}
-
 h3 {
     text-align: center;
     font-family: 'Nanum Myeongjo', serif;
@@ -135,4 +124,28 @@ footer{
     text-align: center;
 	bottom: 0;
 	position: relative;
+}
+
+/* 스마트폰 사이즈에 대한 스타일 */
+@media (max-width: 576px) {
+    a.btn.btn-info.btn-lg.float-left {
+        /* 여기에 스마트폰 크기에 맞는 스타일을 추가하세요 */
+        width: 100%; /* 예시 */
+    }
+
+}
+
+/* 태블릿 사이즈에 대한 스타일 */
+@media (min-width: 577px) and (max-width: 768px) {
+    a.btn.btn-info.btn-lg.float-left {
+        /* 태블릿 크기에 맞는 스타일을 추가하세요 */
+    }
+}
+
+/* 데스크탑 사이즈에 대한 스타일 */
+@media (min-width: 769px) {
+    a.btn.btn-info.btn-lg.float-left {
+        /* 데스크탑 크기에 맞는 스타일을 추가하세요 */
+    }
+
 }

@@ -35,20 +35,22 @@
     </div>
 
     <script>
-        document.getElementById('reportForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // 기본 폼 제출 동작 중지
-            document.getElementById('spinner').classList.add('active'); // 스피너 활성화
-            document.getElementById('overlay').classList.add('active'); // 페이지 다른 액션 비활성화
-            document.body.style.overflow = 'hidden'; // 스크롤 비활성화
-            setTimeout(function() {
-                document.getElementById('reportForm').submit(); // 폼 제출
-            }, 1000); // 원하는 시간(ms)만큼 스피너 활성화
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('reportForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // 기본 폼 제출 동작 중지
+                document.getElementById('spinner').classList.add('active'); // 스피너 활성화
+                document.getElementById('overlay').classList.add('active'); // 페이지 다른 액션 비활성화
+                document.body.style.overflow = 'hidden'; // 스크롤 비활성화
+                setTimeout(function() {
+                    document.getElementById('reportForm').submit(); // 폼 제출
+                }, 1000); // 원하는 시간(ms)만큼 스피너 활성화
+            });
 
-        window.addEventListener('load', function() {
-            document.getElementById('spinner').classList.remove('active'); // 로딩 완료 시 스피너 비활성화
-            document.getElementById('overlay').classList.remove('active'); // 페이지 다른 액션 활성화
-            document.body.style.overflow = 'auto'; // 스크롤 활성화
+            window.addEventListener('load', function() {
+                document.getElementById('spinner').classList.remove('active'); // 로딩 완료 시 스피너 비활성화
+                document.getElementById('overlay').classList.remove('active'); // 페이지 다른 액션 활성화
+                document.body.style.overflow = 'auto'; // 스크롤 활성화
+            });
         });
     </script>
 {% endblock %}

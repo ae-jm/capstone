@@ -67,7 +67,7 @@ button.btn.btn-primary:active {
     color: #5c636a;
 }
 
-.spinner-container {
+div.spinner-container {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -76,11 +76,11 @@ button.btn.btn-primary:active {
             display: none;
 }
 
-.spinner-container.active {
+div.spinner-container.active {
     display: block;
 }
 
-.spinner-overlay {
+div.spinner-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -91,7 +91,7 @@ button.btn.btn-primary:active {
     display: none;
 }
 
-.spinner-overlay.active {
+div.spinner-overlay.active {
     display: block;
 }
 

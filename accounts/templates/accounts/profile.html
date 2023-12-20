@@ -16,12 +16,12 @@
             </div>
         </form>
         <div class="group">
-            {% if post.exists %}
-                <a class="btn btn-info btn-lg float-right" href="/post/" role="button">
-                    <h4>작성한 일기</h4>
-                    <p>{{ post_count }}</p>
-                </a>
-            {% endif %}
+            <a class="btn btn-info btn-lg float-right" href="/post/" role="button">
+                <h4>작성한 일기</h4>
+                    {% if post.exists %}
+                        <p>{{ post_count }}</p>
+                    {% endif %}
+            </a>
             <a class="btn btn-info btn-lg float-left" href="{% url 'diary:playlist' %}" role="button">
                 <h5>음악<br/>히스토리</h5>
             </a>

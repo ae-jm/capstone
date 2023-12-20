@@ -36,7 +36,7 @@ logout = LogoutView.as_view(
 
 @login_required  # 함수위에 씌워주면 로그인시에만 확인 가능
 def mypage(request):
-    post = Post.objects.all()
+    post = Post.objects.filter(author=request.user)
     post_count = post.count()
     return render(
         request,

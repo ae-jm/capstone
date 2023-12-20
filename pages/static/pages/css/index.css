@@ -34,3 +34,27 @@ div h5 {
     font-size: 25px;
     font-weight: bolder;
 }
+/* 모바일 */
+@media (max-width: 576px) {
+    a.btn.btn-info.btn-lg.float-left {
+        /* 여기에 스마트폰 크기에 맞는 스타일을 추가하세요 */
+        width: 100%; /* 예시 */
+    }
+
+}
+
+/* 태블릿 사이즈에 대한 스타일 */
+@media (min-width: 577px) and (max-width: 768px) {
+    a.btn.btn-info.btn-lg.float-left {
+        /* 태블릿 크기에 맞는 스타일을 추가하세요 */
+    }
+
+}
+
+/* 데스크탑 사이즈에 대한 스타일 */
+@media (min-width: 769px) {
+    a.btn.btn-info.btn-lg.float-left {
+        /* 데스크탑 크기에 맞는 스타일을 추가하세요 */
+    }
+
+}

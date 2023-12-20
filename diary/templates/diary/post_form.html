@@ -6,7 +6,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{% static 'diary/bootstrap/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'diary/css/post_form.css' %}" media="screen">
-    <div class="container">
+    <div class="container" style="height: 530px">
         <form method="post" id="diaryForm" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
